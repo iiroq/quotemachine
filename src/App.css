@@ -5,14 +5,13 @@
 #wrapper {
   width: 100vw;
   height: 100vh;
-  background-color: red;
 }
 
 #quote-box {
-  display: flex;
+  display: grid;
   background-color: white;
-  width: 80%;
-  height: 40%;
+  width: 50%;
+  height: auto;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -22,9 +21,40 @@
   border-radius: 5px;
 }
 
-#text {
-  margin: 5%;
+.grid-container {
+  grid-template-rows: auto 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 'quote' 'author' 'buttons';
+  align-items: center;
+  justify-items: center;
+  padding: 20px;
 }
+
+#text {
+  grid-area: 'quote';
+  grid-column: 1/4;
+  font-size: 30px;
+}
+
+#author {
+  grid-area: 'author';
+  grid-column: 3;
+}
+
+#tweet-buttons {
+  grid-area: 'buttons';
+  grid-column: 1;
+}
+
+#tweet-quote {
+  font-size: 40px;
+}
+
+#new-button {
+  grid-area: 'buttons';
+  grid-column: 3;
+}
+
 
 .App-header {
   background-color: #282c34;
