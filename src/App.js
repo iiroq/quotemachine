@@ -2,24 +2,13 @@
 import React from 'react';
 import './App.css';
 import data from './quotes.json';
-//var ReactCSSTransitionGroup = require('react-transition-group'); // ES5 with npm
-//const $ = window.$;
 import {AnimateOnChange} from 'react-animation';
+const $ = window.$;
 
-/*
-function getQuotes() {
-  return $.getJSON('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json', function(data) {
-    // JSON result in `data` variable
-    if (typeof data ==='string') {
-      const quoteData = JSON.parse(data);
-      //console.log(quoteData)
-    } 
-});
-}
-*/
 
-const quotes = data.quotes;
-//console.log(quotes.length)
+//const quotes = data.quotes;
+
+
 const colors = [
   '#16a085',
   '#27ae60',
@@ -39,25 +28,41 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      quote: this.randomQuote(quotes).quote,
-      author: this.randomQuote(quotes).author,
-      opacity: 0
+      quote: '',
+      author: '',
+      quotes: ''
     }
     this.randomQuote = this.randomQuote.bind(this);
     this.click = this.click.bind(this);
   }
+
+  componentDidMount() {
+    var self= this;
+      $.getJSON('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json', function(data) {
+      // JSON result in `data` variable
+      //console.log('data')
+      //console.log(data.quotes[1])
+      const quotes = data.quotes;
+      self.setState( {
+        quote: quotes[0].quote,
+        author: quotes[0].author,
+        quotes: quotes
+      });
+  }); 
+  } 
+
   
-  randomQuote(quotes) {
-    let rand = Math.floor(Math.random() * quotes.length)
-    return quotes[rand];
+  randomQuote() {
+    console.log(this.state.quotes)
+    let rand = Math.floor(Math.random() * this.state.quotes.length)
+    return this.state.quotes[rand];
   }
 
   click() {
-    let randQuote = this.randomQuote(quotes);
+    let randQuote = this.randomQuote();
     this.setState({
       quote: randQuote.quote,
       author: randQuote.author,
-      opacity: 1
     })
 
   }
